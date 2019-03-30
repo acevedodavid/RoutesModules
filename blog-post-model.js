@@ -39,8 +39,48 @@ const ListPosts = {
 	get : function() {
 		return posts;
 	},
-    push : function(newPosts) {
-        posts = newPosts;
+    push : function(newPost) {
+        posts.push(newPost);
+    },
+    getByAuthor : function(author) {
+        let postsByAuthor = []
+        posts.forEach(function (item, index) {
+            if (item.author == author) {
+                postsByAuthor.push(item)
+            }
+        });
+        return postsByAuthor;
+    },
+    deletePost : function(id) {
+        let found = false;
+        posts.forEach(function (item, index) {
+            if (id == item.id) {
+                posts.splice(index, 1)
+                found = true;
+            }
+        })
+        return found;
+    },
+    putPost : function(body,id) {
+        let found = false;
+        posts.forEach(item => {
+            if (item.id == id) {
+                if (body.title) {
+                    item.title = body.title;
+                }
+                if (body.content) {
+                    item.content = body.content;
+                }
+                if (body.author) {
+                    item.author = body.author;
+                }
+                if (body.publishDate) {
+                    item.publishDate = body.publishDate;
+                }
+                found = true;
+            }
+        });
+        return found;
     }
 }
 
